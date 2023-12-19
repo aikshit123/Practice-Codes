@@ -1,0 +1,35 @@
+//To check whether the string has balanced paranthesis or not
+struct node{
+    char data;
+    struct node* next;
+};
+struct node* top=NULL;
+void insert(char ch){
+    struct node* newtop=malloc(sizeof(struct node));
+    newtop->data=ch;
+    newtop->next=top;
+    top=newtop;
+}
+void pop(){
+    struct node* newtop=top;
+    top=top->next;
+    free(newtop);
+}
+bool isValid(char* s) {
+    top=NULL
+    for(int i=0;s[i]!='\0';i++){
+        if(!top){
+            insert(s[i]);
+        }
+        else if((s[i]==')' && top->data=='(') || (s[i]==']' && top->data=='[') || (s[i]=='}' && top->data=='{')){
+            pop();
+        }
+        else{
+            insert(s[i]);
+        }
+    }
+    if(top) return false;
+    return true;
+}
+
+
