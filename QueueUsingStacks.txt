@@ -1,0 +1,73 @@
+typedef struct MyQueue{
+    int data;
+    struct MyQueue *next;
+    struct MyQueue *prev;
+} MyQueue;
+
+MyQueue* front=NULL;
+MyQueue* back=NULL;
+
+MyQueue* myQueueCreate() {
+    return front;
+}
+
+void myQueuePush(MyQueue* obj, int x) {
+    printf("%d",x);
+    if(front==NULL){
+        MyQueue *NewFront=(MyQueue*)malloc(sizeof(MyQueue));
+        front=NewFront;
+        front->next=NULL;
+        front->prev=NULL;
+        front->data=x;
+        back=front;
+    }
+    else{
+        MyQueue *NewBack=(MyQueue*)malloc(sizeof(MyQueue));
+        NewBack->data=x;
+        NewBack->next=NULL;
+        back->next=NewBack;
+        NewBack->prev=back;
+        back=back->next;
+    }
+}
+
+int myQueuePop(MyQueue* obj) {
+   int data=front->data;
+   if(front==back){
+       front=NULL;
+       back=NULL;
+   }
+   else{
+       front=front->next;
+       front->prev=NULL;
+   }
+   return data;
+}
+
+int myQueuePeek(MyQueue* obj) {
+    return front->data;
+}
+
+bool myQueueEmpty(MyQueue* obj) {
+    if(front==NULL) return true;
+    return false;
+}
+
+void myQueueFree(MyQueue* obj) {
+    front=NULL;
+    back=NULL;
+}
+
+/**
+ * Your MyQueue struct will be instantiated and called as such:
+ * MyQueue* obj = myQueueCreate();
+ * myQueuePush(obj, x);
+ 
+ * int param_2 = myQueuePop(obj);
+ 
+ * int param_3 = myQueuePeek(obj);
+ 
+ * bool param_4 = myQueueEmpty(obj);
+ 
+ * myQueueFree(obj);
+*/
