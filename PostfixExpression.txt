@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+typedef struct node{
+    int data;
+    struct node* next;
+}node;
+
+node* top=NULL;
+
+void insert(int x){
+    node* newtop=(node*)malloc(sizeof(node));
+    newtop->next=top;
+    newtop->data=x;
+    top=newtop;
+}
+void pop(){
+    node* newtop=top;
+    top=top->next;
+    free(newtop);
+}
+int main() {
+    int queries;
+    scanf("%d",&queries);
+    for(int i=0;i<queries;i++){
+        top=NULL;
+        char str[10];
+        scanf("%s",str);
+        int ans=0;
+        while(strcmp(str,"?")!=0){
+            if(!strcmp(str,"+")){
+                int ele1=top->data;
+                pop();
+                int ele2=top->data;
+                pop();
+                ans=ele1+ele2;
+                insert(ans);
+            }
+            else if(!strcmp(str,"-")){
+                int ele1=top->data;
+                pop();
+                int ele2=top->data;
+                pop();
+                ans=ele2-ele1;
+                insert(ans);
+            }
+            else if(!strcmp(str,"*")){
+                int ele1=top->data;
+                pop();
+                int ele2=top->data;
+                pop();
+                ans=ele2*ele1;
+                insert(ans);
+            }
+            else if(!strcmp(str,"/")){
+                int ele1=top->data;
+                pop();
+                int ele2=top->data;
+                pop();
+                ans=ele2/ele1;
+                insert(ans);
+            }
+            else{
+                int d=atoi(str);
+                insert(d);
+            }
+            scanf("%s",str);
+        }
+        printf("%d\n",top->data);
+    }
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
